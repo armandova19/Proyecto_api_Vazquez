@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Estados</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"><img src="https://managersmagazine.com/wp-content/uploads/2014/04/empresa-empleado.jpg" width="80" height="80"  alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/empleados">Empleados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/ciudades">Ciudades</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/estados">Estados</a>
+            </li>
+            </ul>
+            <span class="navbar-text">
+                <a class="nav-link" href="/logout">Salir</a>
+            </span>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Estados
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Listado de estados</h5>
+                <div style="float: right;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarestado">Agregar estado</button>
+                </div>
+                <br> <br>
+                <table class="table table-striped table-dark">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">#</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each estados}}
+                        <tr style="text-align: center;">
+                            <th scope="row">{{this.id}}</th>
+                            <td>{{this.estado}}</td>
+                            <td>
+                                <a href="/eliminar-estado/{{this.id}}" type="button" class="btn btn-danger">Eliminar</a>
+                                <button class="btn btn-primary" onclick="editarEstado('{{this.id}}' , '{{this.estado}}')">Editar</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<div class="modal fade bd-example-modal-lg" id="agregarestado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/agregar-estado" method="post">
+                    <div class="form-group">
+                        <label for="estado">Nombre de estado</label>
+                        <input type="text" class="form-control" name="estado" id="estado">
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Agregar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/editar-estado" method="post">
+                    <input type="hidden" name="id_estado" id="id_estado">
+                    <div class="form-group">
+                        <label for="estado_edit">Nombre de estado</label>
+                        <input type="text" class="form-control" name="estado_edit" id="estado_edit">
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Agregar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    function editarEstado(id,estado){
+        document.getElementById('estado_edit').value = estado;
+        document.getElementById('id_estado').value = id;
+        $("#modalEditar").modal('show');
+    }
+</script>
+</body>
+</html>
